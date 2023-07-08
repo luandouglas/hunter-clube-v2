@@ -275,7 +275,7 @@ const Register = () => {
                     {typeof e.icon != "string" ? (
                       <div className="flex flex-row items-center">
                         <Image
-                          src={require(`../../assets/pistol${
+                          src={require(`../../../assets/pistol${
                             selectedExam === e.label ? "_dark" : ""
                           }.png`)}
                           alt="pistol"
@@ -283,7 +283,7 @@ const Register = () => {
                           width={60}
                         />
                         <Image
-                          src={require(`../../assets/revolver${
+                          src={require(`../../../assets/revolver${
                             selectedExam === e.label ? "_dark" : ""
                           }.png`)}
                           alt="revolver"
@@ -293,7 +293,7 @@ const Register = () => {
                       </div>
                     ) : (
                       <Image
-                        src={require(`../../assets/${e.icon}${
+                        src={require(`../../../assets/${e.icon}${
                           selectedExam === e.label ? "_dark" : ""
                         }.png`)}
                         alt="pistol"
