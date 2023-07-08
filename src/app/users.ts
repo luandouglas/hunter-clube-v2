@@ -1,6 +1,6 @@
 import { User } from "@/types/users";
 
-const users:User[] = [
+const users:any[] = [
     {
       nome: "FRANCISCO GUIDO DE OLIVEIRA MACIEL",
       estadocivil: "SOLTEIRO",
