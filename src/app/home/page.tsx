@@ -431,6 +431,7 @@ const Home = () => {
                   <td className=" text-gray-900  px-6 py-4">{el.pontuation}</td>
                   {el.exams.map((e: any, index: number) => (
                     <td
+                      key={index}
                       className={`text-gray-900 px-6 py-4 ${
                         index > 1 && "text-center"
                       }`}
