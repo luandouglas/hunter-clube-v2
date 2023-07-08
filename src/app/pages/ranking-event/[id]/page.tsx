@@ -2,7 +2,7 @@
 import Layout from "@/components/layout/Layout";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useCallback, useEffect, useState, Fragment } from "react";
-import { db } from "../../../../firebaseConfig";
+import { db } from "../../../../../firebaseConfig";
 import { useParams, useRouter } from "next/navigation";
 
 type Exam = {

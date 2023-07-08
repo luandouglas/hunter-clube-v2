@@ -4,7 +4,7 @@ import React, { Fragment, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import usersData from "../../users";
+import usersData from "../../../users";
 import Autocomplete from "@/components/Autocomplete/Autocomplete";
 import SmallPistol from "@/components/SmallPistol/SmallPistol";
 import { User } from "@/types/users";
@@ -19,7 +19,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../../../../firebaseConfig";
+import { db } from "../../../../../firebaseConfig";
 import FogoCentral from "@/components/FogoCentral/FogoCentral";
 import SaquePreciso from "@/components/SaquePreciso/SaquePreciso";
 import TrapAmericano from "@/components/TrapAmericano/TrapAmericano";
