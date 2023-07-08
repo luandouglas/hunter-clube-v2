@@ -32,7 +32,6 @@ const Users = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     // Lógica para processar os dados do formulário aqui
-    console.log("Dados enviados:", gerarMatriculaAleatoria(), nome, cidade, cr);
 
     try {
       await addDoc(collection(db, "users"), {

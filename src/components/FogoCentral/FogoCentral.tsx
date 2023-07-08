@@ -134,27 +134,18 @@ const FogoCentral: React.FC<Props> = ({
     object: ObjectData | undefined,
     newDate: string
   ): string => {
-    console.log("1");
-
     if (checkLevel(object, newDate)) {
-      console.log("2");
       return object!.level!;
     } else if (object && object.level && object.firstRankingDate === newDate) {
-      console.log("3");
       if (object.pontuation <= 180) {
-        console.log("4");
         return "beginner";
       } else {
-        console.log("5");
         return "master";
       }
     } else {
-      console.log("6");
       if (sumValues() <= 180) {
-        console.log("7");
         return "beginner";
       } else {
-        console.log("8");
         return "master";
       }
     }

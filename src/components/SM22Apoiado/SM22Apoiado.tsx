@@ -160,8 +160,6 @@ const SM22Apoiado: React.FC<Props> = ({
     index: number,
     newValue: boolean
   ): void => {
-    console.log(values);
-
     setValues((prevValues: any) => {
       const updatedValues = { ...prevValues };
       updatedValues[individual] = [

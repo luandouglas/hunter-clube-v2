@@ -4,11 +4,11 @@ import React, { Fragment, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import usersData from "../../../users";
+import usersData from "../../users";
 import Autocomplete from "@/components/Autocomplete/Autocomplete";
 import SmallPistol from "@/components/SmallPistol/SmallPistol";
 import { User } from "@/types/users";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   addDoc,
   collection,
@@ -19,7 +19,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../../../../../firebaseConfig";
+import { db } from "../../../../firebaseConfig";
 import FogoCentral from "@/components/FogoCentral/FogoCentral";
 import SaquePreciso from "@/components/SaquePreciso/SaquePreciso";
 import TrapAmericano from "@/components/TrapAmericano/TrapAmericano";
@@ -28,8 +28,7 @@ import SM22Precisao from "@/components/SM22Precisao/SM22Precisao";
 import SM22Apoiado from "@/components/SM22Apoiado/SM22Apoiado";
 import PercursoCaca from "@/components/PercursoCaca/PercursoCaca";
 
-const Register = () => {
-  const params = useParams();
+export default function Register({ params }: { params: { eventId: string } }) {
   const router = useRouter();
   const [eventId, setEventId] = React.useState<string>();
   const [open, setOpen] = React.useState(false);
@@ -76,13 +75,13 @@ const Register = () => {
   const [step, setStep] = React.useState(0);
 
   const fetchEvent = useCallback(async () => {
-    if (!params.id) return;
+    if (!params.eventId) return;
 
-    const docSnapshot = await getDoc(doc(db, "events", params.id));
+    const docSnapshot = await getDoc(doc(db, "events", params.eventId));
     const eventData = { ...docSnapshot.data(), id: docSnapshot.id };
 
     setEvent(eventData);
-  }, [params.id]);
+  }, [params.eventId]);
 
   useEffect(() => {
     fetchEvent();
@@ -122,7 +121,7 @@ const Register = () => {
     const collectionRef = collection(db, "exam-results");
 
     const data = {
-      eventId: params.id,
+      eventId: params.eventId,
       name: result.name,
       examId: result.examId,
       results: {
@@ -275,7 +274,7 @@ const Register = () => {
                     {typeof e.icon != "string" ? (
                       <div className="flex flex-row items-center">
                         <Image
-                          src={require(`../../../assets/pistol${
+                          src={require(`../../assets/pistol${
                             selectedExam === e.label ? "_dark" : ""
                           }.png`)}
                           alt="pistol"
@@ -283,7 +282,7 @@ const Register = () => {
                           width={60}
                         />
                         <Image
-                          src={require(`../../../assets/revolver${
+                          src={require(`../../assets/revolver${
                             selectedExam === e.label ? "_dark" : ""
                           }.png`)}
                           alt="revolver"
@@ -293,7 +292,7 @@ const Register = () => {
                       </div>
                     ) : (
                       <Image
-                        src={require(`../../../assets/${e.icon}${
+                        src={require(`../../assets/${e.icon}${
                           selectedExam === e.label ? "_dark" : ""
                         }.png`)}
                         alt="pistol"
@@ -553,6 +552,4 @@ const Register = () => {
       )}
     </Layout>
   );
-};
-
-export default Register;
+}

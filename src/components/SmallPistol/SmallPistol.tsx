@@ -55,7 +55,6 @@ const SmallPistol: React.FC<Props> = ({
     if (data.length > 0) {
       setLevel(data[0]);
     }
-    console.log(data);
   }, []);
 
   useEffect(() => {

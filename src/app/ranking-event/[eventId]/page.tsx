@@ -2,8 +2,8 @@
 import Layout from "@/components/layout/Layout";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useCallback, useEffect, useState, Fragment } from "react";
-import { db } from "../../../../../firebaseConfig";
-import { useParams, useRouter } from "next/navigation";
+import { db } from "../../../../firebaseConfig";
+import { useRouter } from "next/navigation";
 
 type Exam = {
   id: string;
@@ -12,9 +12,13 @@ type Exam = {
   tipo_prova: string;
 };
 
-const RankingEvent = () => {
-  const params = useParams();
+export default function RankingEvent({
+  params,
+}: {
+  params: { eventId: string };
+}) {
   const router = useRouter();
+
   const [ranking, setRanking] = useState<any[]>([]);
   const [exams, setExams] = useState<Exam[]>([
     {
@@ -156,8 +160,6 @@ const RankingEvent = () => {
   const [eventId, setEventId] = useState<string>("");
 
   const fetchRanking = async () => {
-    console.log(selectedExam, selectedGun, selectedLevel);
-
     if (selectedExam === "") return;
     if (selectedExam != "EfvFedkhOSML884He43N") setShowCategory(true);
     if (selectedExam == "EfvFedkhOSML884He43N") fetchCarabina22MiraAberta();
@@ -185,10 +187,10 @@ const RankingEvent = () => {
     return Array.from(map.values());
   };
   useEffect(() => {
-    if (!params.id) {
+    if (!params.eventId) {
       router.push("/events");
     }
-    setEventId(params.id);
+    setEventId(params.eventId);
   }, []);
 
   const handleChangeExam = (value: string) => {
@@ -458,7 +460,7 @@ const RankingEvent = () => {
         </button>
         {/* <Button onClick={() => fetchRanking()}>Buscar</Button> */}
       </div>
-      {JSON.stringify(showGun)}
+
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         {ranking.length ? (
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
@@ -534,6 +536,4 @@ const RankingEvent = () => {
       </div>
     </Layout>
   );
-};
-
-export default RankingEvent;
+}
