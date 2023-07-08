@@ -1,153 +1,18 @@
 "use client";
+import React, { useCallback, useState, FC } from "react";
 import Layout from "@/components/layout/Layout";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
-import { useCallback, useEffect, useState, Fragment } from "react";
 import { db } from "../../../../firebaseConfig";
-import { useRouter } from "next/navigation";
 
-type Exam = {
-  id: string;
-  levels?: { label: string; value: string }[];
-  guns?: { label: string; value: string }[];
-  tipo_prova: string;
-};
+import { exams } from "@/utils/exams";
 
-export default function RankingEvent({
-  params,
-}: {
+interface pageProps {
   params: { eventId: string };
-}) {
-  const router = useRouter();
+}
 
+const Page: FC<pageProps> = ({ params }) => {
   const [ranking, setRanking] = useState<any[]>([]);
-  const [exams, setExams] = useState<Exam[]>([
-    {
-      tipo_prova: "Apuração - Carabina Precisão 22 a 25 Metros",
-      id: "EfvFedkhOSML884He43N",
-    },
-    {
-      guns: [
-        {
-          value: "pistol",
-          label: "Pistola",
-        },
-        {
-          value: "revolver",
-          label: "Revolver",
-        },
-      ],
-      levels: [
-        {
-          value: "beginner",
-          label: "Iniciante",
-        },
-        {
-          label: "Master",
-          value: "master",
-        },
-      ],
-      tipo_prova: "Apuração de Saque Preciso",
-      id: "KkAF46R6WrwZWq1FNhvX",
-    },
-    {
-      levels: [
-        {
-          value: "beginner",
-          label: "Iniciante",
-        },
-        {
-          value: "master",
-          label: "Master",
-        },
-        {
-          label: "Super master",
-          value: "super-master",
-        },
-      ],
-      tipo_prova: "Silhueta Metálica 22 e Precisão",
-      id: "PCb1rh0OrOzxAmCTghGB",
-    },
-    {
-      guns: [
-        {
-          label: "Pistola",
-          value: "pistol",
-        },
-        {
-          value: "revolver",
-          label: "Revolver",
-        },
-      ],
-      tipo_prova: "Súmula de Apuração de Fogo Central",
-      levels: [
-        {
-          value: "beginner",
-          label: "Iniciante",
-        },
-        {
-          label: "Master",
-          value: "master",
-        },
-      ],
-      id: "YchOCURkmZCTsymgHwG0",
-    },
-    {
-      tipo_prova: "Apuração de Prova Extra - Small Pistol",
-      levels: [
-        {
-          value: "beginner",
-          label: "Iniciante",
-        },
-        {
-          label: "Master",
-          value: "master",
-        },
-      ],
-      id: "cpxPRShLAuDSmBwFKHXw",
-    },
-    {
-      tipo_prova: "Trap Americano",
-      levels: [
-        {
-          label: "Iniciante",
-          value: "beginner",
-        },
-        {
-          value: "master",
-          label: "Master",
-        },
-      ],
-      id: "hej6E1jjnq81xZMGiqEi",
-    },
-    {
-      levels: [
-        {
-          label: "Iniciante",
-          value: "beginner",
-        },
-        {
-          label: "Master",
-          value: "master",
-        },
-      ],
-      tipo_prova: "Silhueta Metálica 22 Apoiado",
-      id: "q00RXisO4sQqOZ8JfqvW",
-    },
-    {
-      levels: [
-        {
-          value: "beginner",
-          label: "Iniciante",
-        },
-        {
-          value: "master",
-          label: "Master",
-        },
-      ],
-      tipo_prova: "Percurso de Caça",
-      id: "qnpGZ7u0IW01TZQ4olPn",
-    },
-  ]);
+
   const [selectedExam, setSelectedExam] = useState<string>("");
   const [selectedLevel, setSelectedLevel] = useState<any>();
   const [selectedGun, setSelectedGun] = useState<string>("");
@@ -157,7 +22,6 @@ export default function RankingEvent({
 
   const [showCategory, setShowCategory] = useState<boolean>(true);
   const [showGun, setShowGun] = useState<boolean>(true);
-  const [eventId, setEventId] = useState<string>("");
 
   const fetchRanking = async () => {
     if (selectedExam === "") return;
@@ -186,13 +50,6 @@ export default function RankingEvent({
 
     return Array.from(map.values());
   };
-  useEffect(() => {
-    if (!params.eventId) {
-      router.push("/events");
-    }
-    setEventId(params.eventId);
-  }, []);
-
   const handleChangeExam = (value: string) => {
     setSelectedExam(value);
     const find = exams.find((e) => e.id == value);
@@ -237,7 +94,7 @@ export default function RankingEvent({
       query(
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         orderBy("results.total", "desc"),
         orderBy("results.pointsCounter.12", "desc"),
         orderBy("results.pointsCounter.10", "desc"),
@@ -259,7 +116,7 @@ export default function RankingEvent({
       query(
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         where("results.level", "==", selectedLevel),
         where("results.gun", "==", selectedGun),
         orderBy("results.total", "desc"),
@@ -285,7 +142,7 @@ export default function RankingEvent({
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
         where("results.level", "==", selectedLevel),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         orderBy("results.total", "desc")
       )
     );
@@ -300,7 +157,7 @@ export default function RankingEvent({
       query(
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         where("results.level", "==", selectedLevel),
         where("results.gun", "==", selectedGun),
         orderBy("results.total", "desc"),
@@ -326,7 +183,7 @@ export default function RankingEvent({
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
         where("results.level", "==", selectedLevel),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         orderBy("results.total", "desc")
       )
     );
@@ -342,7 +199,7 @@ export default function RankingEvent({
       query(
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         where("results.level", "==", selectedLevel),
         orderBy("results.total", "desc"),
         orderBy("results.pointsCounter.12", "desc"),
@@ -365,7 +222,7 @@ export default function RankingEvent({
       query(
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         where("results.level", "==", selectedLevel),
         orderBy("results.total", "desc"),
         orderBy("results.pointsCounter.12", "desc"),
@@ -387,7 +244,7 @@ export default function RankingEvent({
       query(
         collection(db, "exam-results"),
         where("examId", "==", selectedExam),
-        where("eventId", "==", eventId),
+        where("eventId", "==", params.eventId),
         orderBy("results.total", "desc")
       )
     );
@@ -536,4 +393,5 @@ export default function RankingEvent({
       </div>
     </Layout>
   );
-}
+};
+export default Page;
