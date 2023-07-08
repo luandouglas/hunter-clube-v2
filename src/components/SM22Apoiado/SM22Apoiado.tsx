@@ -270,9 +270,11 @@ const SM22Apoiado: React.FC<Props> = ({
                   )}
                 </div>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((j) => (
-                  <div className="border border-gray-400 w-14 h-[42px] flex justify-center items-center">
+                  <div
+                    className="border border-gray-400 w-14 h-[42px] flex justify-center items-center"
+                    key={j}
+                  >
                     <input
-                      key={j}
                       className="focus:outline-none focus:border-gray-600 focus:shadow-none "
                       type="checkbox"
                       value={values[getAttr(e)][j - 1] || ""}
@@ -304,9 +306,11 @@ const SM22Apoiado: React.FC<Props> = ({
 
               <div className="flex flex-row items-center">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((j) => (
-                  <div className="border border-gray-400 w-14 h-[42px] flex justify-center items-center">
+                  <div
+                    className="border border-gray-400 w-14 h-[42px] flex justify-center items-center"
+                    key={j}
+                  >
                     <input
-                      key={j}
                       className="focus:outline-none focus:border-gray-600 focus:shadow-none "
                       type="checkbox"
                       value={values[getAttr(5)][j - 1] || ""}
