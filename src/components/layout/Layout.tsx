@@ -1,7 +1,9 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { PropsWithChildren } from "react";
 
 const Layout = (props: PropsWithChildren) => {
+  const router = useRouter();
   return (
     <>
       <button
@@ -33,7 +35,7 @@ const Layout = (props: PropsWithChildren) => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <a href="#" className="flex items-center pl-2.5 mb-5">
+          <button className="flex items-center pl-2.5 mb-5">
             <img
               src="https://www.hunterclube.com.br/img/logo_site.png"
               className="h-6 mr-3 sm:h-7"
@@ -42,11 +44,11 @@ const Layout = (props: PropsWithChildren) => {
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
               Clube Hunter
             </span>
-          </a>
+          </button>
           <ul className="space-y-2 font-medium">
             <li>
-              <a
-                href="/home"
+              <button
+                onClick={() => router.push("/home")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -60,12 +62,12 @@ const Layout = (props: PropsWithChildren) => {
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
                 <span className="ml-3">Início</span>
-              </a>
+              </button>
             </li>
 
             <li>
-              <a
-                href="/events"
+              <button
+                onClick={() => router.push("/events")}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -82,7 +84,30 @@ const Layout = (props: PropsWithChildren) => {
                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
                   4
                 </span>
-              </a>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => router.push("/users")}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <span className="flex-1 ml-3 whitespace-nowrap">
+                  Atiradores
+                </span>
+              </button>
             </li>
             {/* <li>
               <a
